@@ -78,6 +78,10 @@ python src/train.py
 
 
 
+
+
+---
+
 ## 🔬Experimentation with MLflow
 
 Multiple experiments were run and tracked:
@@ -99,12 +103,16 @@ Tracked models:
   
 
 
+---
+
 ## 📊 Model Selection & Results
 Model	Accuracy	F1-Score	Notes
-Logistic Regression	84.2%	0.79	Fast but underfit
-Random Forest	89.3%	0.86	Strong generalization
+Logistic Regression	Fast but underfit
+Random Forest		Strong generalization
 
 
+
+---
 
 ## 🚦 Staging vs Production Justification
 
@@ -115,7 +123,7 @@ Rationale: Fast training time, easy to interpret, slightly lower performance
 Use case: Ideal for testing environments or quick iterations
 
 
-- 🏁 Production Model: Gradient Boosting
+- 🏁 Production Model: Random Forest
 
 Rationale: Best overall performance and robustness
 
