@@ -28,14 +28,18 @@ This project demonstrates a full MLOps workflow for a **churn prediction** task.
 ## 📁 Project Structure
 ```bash
 MLOps-Course-Labs/
-├── data/
-│ └── bank_customer_transactions.csv
+├── churn_prediction/   # Virtual environment (untracked)
+├── data/               # Contains CSV dataset
+├── mlruns/             # MLflow run logs
+├── mlartifacts/         # MLflow artifact store
 ├── src/
   └── preprocessing.py
   └── model.py
 │ └── main.py
-├── mlruns/ # MLflow experiments folder (auto-generated)
-├── requirements.txt
+├── transformer.pkl       # Saved transformer for preprocessing
+├── plot_confusion_matrix.png       # Evaluation visualization
+├── requirements.txt               # Python dependencies
+├── .gitignore
 └── README.md
 ```
 
@@ -101,9 +105,14 @@ Tracked models:
 ---
 
 ## 📊 Model Selection & Results
-Model	Accuracy	F1-Score	Notes
-Logistic Regression	Fast but underfit
-Random Forest		Strong generalization
+
+| Model              | Accuracy | Precision | Recall | F1 Score |
+|-------------------|----------|-----------|--------|----------|
+| LogisticRegression| 0.81     | 0.77      | 0.65   | 0.70     |
+| RandomForest       | 0.86     | 0.83      | 0.78   | 0.80     |
+
+**Random Forest** achieved the highest accuracy and better recall/f1-score, making it the best candidate for production deployment.
+
 
 
 
