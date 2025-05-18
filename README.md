@@ -8,8 +8,7 @@
 - [Experimentation with MLflow](#experimentation-with-mlflow)
 - [Model Selection & Results](#model-selection--results)
 - [Staging vs Production Justification](#staging-vs-production-justification)
-- [Bonus Work](#bonus-work)
-- [Future Improvements](#future-improvements)
+  
 
 ---
 
