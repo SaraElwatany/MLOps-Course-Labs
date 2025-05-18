@@ -32,7 +32,9 @@ MLOps-Course-Labs/
 ├── data/
 │ └── bank_customer_transactions.csv
 ├── src/
-│ └── train.py
+  └── preprocessing.py
+  └── model.py
+│ └── main.py
 ├── mlruns/ # MLflow experiments folder (auto-generated)
 ├── requirements.txt
 └── README.md
@@ -46,7 +48,7 @@ MLOps-Course-Labs/
 1. **Clone and switch to the research branch**
 
 ```bash
-git clone https://github.com/<your-username>/MLOps-Course-Labs.git
+git clone https://github.com/SaraElwatany/MLOps-Course-Labs.git
 cd MLOps-Course-Labs
 git checkout research
 ```
@@ -67,15 +69,9 @@ pip install -r requirements.txt
 ```
 
 
-4. **Download dataset**
+4. **Run training script**
    
-Place bank_customer_transactions.csv inside the data/ folder.
-
-
-6. **Run training script**
-   
-python src/train.py
-
+python src/main.py
 
 
 
