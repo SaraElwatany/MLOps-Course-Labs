@@ -111,7 +111,11 @@ Tracked models:
 | LogisticRegression| 0.81     | 0.77      | 0.65   | 0.70     |
 | RandomForest       | 0.86     | 0.83      | 0.78   | 0.80     |
 
-**Random Forest** achieved the highest accuracy and better recall/f1-score, making it the best candidate for production deployment.
+After conducting a minimum of 25 runs, the following conclusions were drawn based on the most promising results:
+
+- **Gradient Boosting** consistently achieved the highest accuracy, along with superior recall and F1-score, making it the strongest candidate for production deployment due to its robust predictive performance.
+
+- **Random Forest**, while exhibiting slightly lower metrics, benefits from lower computational complexity, which makes it a compelling choice for staging environments or scenarios that prioritize speed and resource efficiency.
 
 
 
