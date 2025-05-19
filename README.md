@@ -116,9 +116,11 @@ Tracked models:
 | Gradient Boosting | 0.77     |    0.79   |  0.73  |  0.76    |
 
 
-**Gradient Boosting** achieved the highest accuracy, along with superior recall and F1-score, making it the most suitable candidate for production deployment due to its overall predictive performance.
+After conducting a minimum of 25 runs, the following conclusions were drawn based on the most promising results:
 
-While **Random Forest** demonstrated slightly lower metrics, its lower computational complexity makes it a practical choice for staging environments or scenarios where inference speed and resource efficiency are prioritized.
+- **Gradient Boosting** consistently achieved the highest accuracy, along with superior recall and F1-score, making it the strongest candidate for production deployment due to its robust predictive performance.
+
+- **Random Forest**, while exhibiting slightly lower metrics, benefits from lower computational complexity, which makes it a compelling choice for staging environments or scenarios that prioritize speed and resource efficiency.
 
 
 
@@ -133,7 +135,7 @@ Rationale: Fast training time, easy to interpret, slightly lower performance
 Use case: Ideal for testing environments or quick iterations
 
 
-- 🏁 Production Model: Random Forest
+- 🏁 Production Model: Gradient Boosting
 
 Rationale: Best overall performance and robustness
 
