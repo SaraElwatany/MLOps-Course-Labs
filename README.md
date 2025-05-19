@@ -110,13 +110,15 @@ Tracked models:
 
 ## 📊 Model Selection & Results
 
-| Model              | Accuracy | Precision | Recall | F1 Score |
+| Model             | Accuracy | Precision | Recall | F1 Score |
 |-------------------|----------|-----------|--------|----------|
-| LogisticRegression| 0.81     | 0.77      | 0.65   | 0.70     |
-| RandomForest       | 0.86     | 0.83      | 0.78   | 0.80     |
+| Random Forest     | 0.76     |    0.76   |  0.73  |  0.74    |
+| Gradient Boosting | 0.77     |    0.79   |  0.73  |  0.76    |
 
-**Random Forest** achieved the highest accuracy and better recall/f1-score, making it the best candidate for production deployment.
 
+**Gradient Boosting** achieved the highest accuracy, along with superior recall and F1-score, making it the most suitable candidate for production deployment due to its overall predictive performance.
+
+While **Random Forest** demonstrated slightly lower metrics, its lower computational complexity makes it a practical choice for staging environments or scenarios where inference speed and resource efficiency are prioritized.
 
 
 
