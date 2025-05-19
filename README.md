@@ -132,7 +132,7 @@ Rationale: Fast training time, easy to interpret, slightly lower performance
 Use case: Ideal for testing environments or quick iterations
 
 
-- 🏁 Production Model: Random Forest
+- 🏁 Production Model: Gradient Boosting
 
 Rationale: Best overall performance and robustness
 
