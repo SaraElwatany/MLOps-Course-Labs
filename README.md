@@ -100,7 +100,8 @@ Tracked models:
 
 - Random Forest
   
-
+- Gradient Boosting
+  
 
 ---
 
