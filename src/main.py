@@ -25,63 +25,98 @@ from sklearn.metrics import (
 
 
 
+
 def main():
 
-    ### Set the tracking URI for MLflow
     mlflow.set_tracking_uri("http://127.0.0.1:5000")
-
-    ### Set the experiment name
     mlflow.set_experiment("Session 2 Experiment")
 
+    df = pd.read_csv("dataset/Churn_Modelling.csv")
+    col_transf, X_train, X_test, y_train, y_test = preprocess(df)
 
-    ### Start a new run and leave all the main function code as part of the experiment
-    with mlflow.start_run(run_name=f'run_{9}') as run:
-
-        df = pd.read_csv("dataset/Churn_Modelling.csv")
-        col_transf, X_train, X_test, y_train, y_test = preprocess(df)
-
-        ### Log the max_iter parameter: n_estimators=100, max_depth=10, random_state=42
-        mlflow.log_param("n_estimators", 150)
-        mlflow.log_param("max_depth", 8)
-        mlflow.log_param("random_state", 42)
-
-        model = train(X_train, y_train)
-        y_pred = model.predict(X_test)
-
-        ### Log metrics after calculating them
-        accuracy = accuracy_score(y_test, y_pred)
-        precision = precision_score(y_test, y_pred)
-        recall = recall_score(y_test, y_pred)
-        f1 = f1_score(y_test, y_pred)
-        
-        #log the metrics
-        mlflow.log_metrics({
-                            "Accuracy": accuracy,
-                            "precision": precision,
-                            "recall": recall,
-                            "f1-score": f1
-                        })
+    models = ['LogisticRegression', 'RandomForest', 'GradientBoosting']
+    model_id = 0
 
 
-        ### Log tag
-        mlflow.set_tag("version", "1.3")
-        mlflow.set_tag("model", "Random Forest")
+    model_params = {
+        'LogisticRegression': [
+            {'c': 1, 'max_iter': 100},
+            {'c': 10, 'max_iter': 150},
+            {'c': 100, 'max_iter': 200},
+            {'c': 500, 'max_iter': 250},
+            {'c': 1000, 'max_iter': 300}
+        ],
 
-        
-        conf_mat = confusion_matrix(y_test, y_pred, labels=model.classes_)
-        conf_mat_disp = ConfusionMatrixDisplay(
-                                                confusion_matrix=conf_mat, display_labels=model.classes_
-                                              )
-        cm_plot = conf_mat_disp.plot()
+        'RandomForest': [
+            {'n_estimators': 50, 'max_depth': 5},
+            {'n_estimators': 100, 'max_depth': 10},
+            {'n_estimators': 150, 'max_depth': 15},
+            {'n_estimators': 200, 'max_depth': 20},
+            {'n_estimators': 250, 'max_depth': 25}
+        ],
 
-        
-        # Log the image as an artifact in MLflow
-        artifact_path = 'plot_confusion_matrix.png'
-        cm_plot.figure_.savefig(artifact_path)
-        mlflow.log_artifact(artifact_path, artifact_path="artifacts")
+        'GradientBoosting': [
+            {'n_estimators': 50, 'max_depth': 3},
+            {'n_estimators': 100, 'max_depth': 4},
+            {'n_estimators': 150, 'max_depth': 5},
+            {'n_estimators': 200, 'max_depth': 6},
+            {'n_estimators': 250, 'max_depth': 7}
+        ]
+    }
 
-        
-        plt.show()
+
+
+
+    for run_id in range(10, 25):
+
+
+        if run_id % 5 == 0 and run_id != 10:
+            model_id += 1
+
+        current_model = models[model_id]
+
+        trial_id = (run_id - 10) % 5
+        current_params = model_params[current_model][trial_id]
+
+
+
+        with mlflow.start_run(run_name=f'run_{str(run_id)}', nested=True):
+
+            try:
+
+                for key, val in current_params.items():
+                    mlflow.log_param(key, val)
+
+
+                model, _ = train(X_train, y_train, current_model, current_params)
+                y_pred = model.predict(X_test)
+
+
+
+                mlflow.log_metrics({
+                                    "accuracy": accuracy_score(y_test, y_pred),
+                                    "precision": precision_score(y_test, y_pred),
+                                    "recall": recall_score(y_test, y_pred),
+                                    "f1_score": f1_score(y_test, y_pred)
+                                  })
+
+
+                mlflow.set_tag("version", "1.3")
+                mlflow.set_tag("model", current_model)
+
+                conf_mat = confusion_matrix(y_test, y_pred)
+                disp = ConfusionMatrixDisplay(confusion_matrix=conf_mat)
+                disp.plot()
+
+                artifact_path = 'plot_confusion_matrix.png'
+                plt.savefig(artifact_path)
+                mlflow.log_artifact(artifact_path, artifact_path="artifacts")
+                plt.close()
+
+            finally:
+                mlflow.end_run()
+
+
 
 
 

@@ -1,8 +1,9 @@
-aliases: []
+aliases:
+- stagingmodel
 creation_timestamp: 1747603231138
-current_stage: None
+current_stage: Deleted_Internal
 description: ''
-last_updated_timestamp: 1747603231138
+last_updated_timestamp: 1747646801202
 name: churn_model
 run_id: 62e2da913ae4408eac53e9878eb2c21a
 run_link: ''
