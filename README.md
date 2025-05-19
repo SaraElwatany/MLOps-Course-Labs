@@ -106,10 +106,11 @@ Tracked models:
 
 ## 📊 Model Selection & Results
 
-| Model              | Accuracy | Precision | Recall | F1 Score |
+| Model             | Accuracy | Precision | Recall | F1 Score |
 |-------------------|----------|-----------|--------|----------|
-| LogisticRegression| 0.81     | 0.77      | 0.65   | 0.70     |
-| RandomForest       | 0.86     | 0.83      | 0.78   | 0.80     |
+| Random Forest     | 0.76     |    0.76   |  0.73  |  0.74    |
+| Gradient Boosting | 0.77     |    0.79   |  0.73  |  0.76    |
+
 
 After conducting a minimum of 25 runs, the following conclusions were drawn based on the most promising results:
 
