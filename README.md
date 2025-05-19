@@ -36,6 +36,10 @@ MLOps-Course-Labs/
   └── preprocessing.py
   └── model.py
 │ └── main.py
+├── testing/
+  └── __init__.py
+  └── test.py
+├── model.pkl 
 ├── transformer.pkl       # Saved transformer for preprocessing
 ├── plot_confusion_matrix.png       # Evaluation visualization
 ├── requirements.txt               # Python dependencies
