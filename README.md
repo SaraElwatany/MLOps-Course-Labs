@@ -36,6 +36,10 @@ MLOps-Course-Labs/
   └── preprocessing.py
   └── model.py
 │ └── main.py
+├── testing/
+  └── __init__.py
+  └── test.py
+├── model.pkl 
 ├── transformer.pkl       # Saved transformer for preprocessing
 ├── plot_confusion_matrix.png       # Evaluation visualization
 ├── requirements.txt               # Python dependencies
@@ -100,19 +104,25 @@ Tracked models:
 
 - Random Forest
   
+- Gradient Boosting
+  
 
 
 ---
 
 ## 📊 Model Selection & Results
 
-| Model              | Accuracy | Precision | Recall | F1 Score |
+| Model             | Accuracy | Precision | Recall | F1 Score |
 |-------------------|----------|-----------|--------|----------|
-| LogisticRegression| 0.81     | 0.77      | 0.65   | 0.70     |
-| RandomForest       | 0.86     | 0.83      | 0.78   | 0.80     |
+| Random Forest     | 0.76     |    0.76   |  0.73  |  0.74    |
+| Gradient Boosting | 0.77     |    0.79   |  0.73  |  0.76    |
 
-**Random Forest** achieved the highest accuracy and better recall/f1-score, making it the best candidate for production deployment.
 
+After conducting a minimum of 25 runs, the following conclusions were drawn based on the most promising results:
+
+- **Gradient Boosting** consistently achieved the highest accuracy, along with superior recall and F1-score, making it the strongest candidate for production deployment due to its robust predictive performance.
+
+- **Random Forest**, while exhibiting slightly lower metrics, benefits from lower computational complexity, which makes it a compelling choice for staging environments or scenarios that prioritize speed and resource efficiency.
 
 
 
@@ -127,7 +137,7 @@ Rationale: Fast training time, easy to interpret, slightly lower performance
 Use case: Ideal for testing environments or quick iterations
 
 
-- 🏁 Production Model: Random Forest
+- 🏁 Production Model: Gradient Boosting
 
 Rationale: Best overall performance and robustness
 
