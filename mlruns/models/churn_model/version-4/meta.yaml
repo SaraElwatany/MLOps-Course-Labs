@@ -1,8 +1,9 @@
-aliases: []
+aliases:
+- productionmodel
 creation_timestamp: 1747646721597
-current_stage: None
+current_stage: Production
 description: ''
-last_updated_timestamp: 1747646721597
+last_updated_timestamp: 1747685286980
 name: churn_model
 run_id: 9a174272665945a0b7d65a4a84d178eb
 run_link: ''
