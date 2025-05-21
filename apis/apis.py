@@ -4,6 +4,7 @@ import pandas as pd
 from fastapi import Body
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
+from prometheus_fastapi_instrumentator import Instrumentator
 
 
 
@@ -45,3 +46,9 @@ def predict(data: dict = Body(...)):
 
 
     return JSONResponse(content={"prediction": f"{pred.tolist()}"})
+
+
+
+
+
+Instrumentator().instrument(app).expose(app)
