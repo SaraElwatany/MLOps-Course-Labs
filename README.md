@@ -39,10 +39,23 @@ MLOps-Course-Labs/
 ├── testing/
   └── __init__.py
   └── test.py
+├── apis/
+  └── apis.py
+  └── requirements.txt
+  └── model.pkl
+  └── transformer.pkl
+  └── DockerFile      # API Image
+├── prometheus/
+  └── prometheus.yml
+├── grafana/
+  └── provisioning/
+    └── dashboards/
+      └── dashboard.yml
 ├── model.pkl 
 ├── transformer.pkl       # Saved transformer for preprocessing
 ├── plot_confusion_matrix.png       # Evaluation visualization
 ├── requirements.txt               # Python dependencies
+├── docker-compose.yaml
 ├── .gitignore
 └── README.md
 ```
