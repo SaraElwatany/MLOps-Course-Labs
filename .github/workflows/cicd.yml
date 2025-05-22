@@ -1,61 +1,60 @@
-name: CI/CD Pipeline - Deploy API to EC2
+name: Build, Test, and Deploy to AWS EC2
 
 on:
   push:
     branches:
-      - deployment  
-
-env:
-  AWS_REGION: us-east-1
-  ECR_REPO: churn-prediction
-  IMAGE_TAG: sara123 
-  IMAGE_NAME: churn-prediction:sara0285
+      - deployment
 
 jobs:
-  deploy:
+  build_test_deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout source code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      # Run unit tests
-      - name: Run Unit Tests
+      - name: Set up Python 
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.10' 
+
+      - name: Install Dependencies
         run: |
           pip install -r apis/requirements.txt
+
+      - name: Run Tests
+        run: |
           pytest testing/test.py
 
-      # # Configure AWS credentials
-      # - name: Configure AWS Credentials
-      #   uses: aws-actions/configure-aws-credentials@v2
+      # - name: Build Docker Image
+      #   run: |
+      #     cd 5_ci_cd/cicd_example
+      #     docker build -t ml-model-service:latest .
+
+      # - name: Configure AWS credentials
+      #   uses: aws-actions/configure-aws-credentials@0e613a0980cbf65ed5b322eb7a1e075d28913a83
       #   with:
       #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
       #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      #     aws-region: ${{ env.AWS_REGION }}
+      #     aws-region: ${{ secrets.AWS_REGION }}
 
-      # # Login to ECR
       # - name: Login to Amazon ECR
-      #   run: |
-      #     aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.$AWS_REGION.amazonaws.com
+      #   id: login-ecr
+      #   uses: aws-actions/amazon-ecr-login@62f4f872db3836360b72999f4b87f1ff13310f3a
 
-      # # Build and push Docker image to ECR
-      # - name: Build, Tag, and Push Docker Image
+      # - name: Push Docker Image to ECR
       #   run: |
-      #     docker build -t $ECR_REPO:$IMAGE_TAG ./apis
-      #     docker tag $ECR_REPO:$IMAGE_TAG ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPO:$IMAGE_TAG
-      #     docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPO:$IMAGE_TAG
+      #     aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
+      #     docker tag ml-model-service:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/churn-prediction:latest
+      #     docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/churn-prediction:latest    
 
-      # # SSH and deploy on EC2
-      # - name: Deploy on EC2
-      #   uses: appleboy/ssh-action@v1.0.0
+      # - name: Deploy to EC2
+      #   uses: appleboy/ssh-action@master
       #   with:
-      #     host: ${{ secrets.EC2_HOST }}
-      #     username: ${{ secrets.EC2_USER }}
-      #     key: ${{ secrets.EC2_SSH_KEY }}
+      #     host: ${{ secrets.EC2_HOST }} 
+      #     username: ${{ secrets.EC2_USERNAME }} 
+      #     key: ${{ secrets.EC2_SSH_KEY }}  
       #     script: |
-      #       sudo rm -rf MLOps-Course-Labs
-      #       git clone https://github.com/${{ github.repository }}.git
-      #       cd MLOps-Course-Labs
-      #       docker-compose down
-      #       docker-compose pull
-      #       docker-compose up -d --build
+      #       aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
+      #       docker pull ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/churn-prediction:latest
+      #       docker stop churn-prediction || true # In case the container doesn't exist yet
+      #       docker rm churn-prediction || true
+      #       docker run -d -p 80:8005 --name churn-prediction ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/churn-prediction:latest 
