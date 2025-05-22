@@ -39,6 +39,11 @@ MLOps-Course-Labs/
 ├── testing/
   └── __init__.py
   └── test.py
+├── prometheus/
+  └── prometheus.yml
+├── grafana/
+  └── dashboards
+    └── grafana.yml
 ├── model.pkl 
 ├── transformer.pkl       # Saved transformer for preprocessing
 ├── plot_confusion_matrix.png       # Evaluation visualization
