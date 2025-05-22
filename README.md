@@ -42,8 +42,9 @@ MLOps-Course-Labs/
 ├── prometheus/
   └── prometheus.yml
 ├── grafana/
-  └── dashboards
-    └── grafana.yml
+  └── provisioning
+    └── dashboards
+      └── grafana.yml
 ├── model.pkl 
 ├── transformer.pkl       # Saved transformer for preprocessing
 ├── plot_confusion_matrix.png       # Evaluation visualization
