@@ -5,7 +5,7 @@ services:
       context: ./apis
     container_name: fastapi
     ports:
-      - "80:80"
+      - "80:80"     
     networks:
       - monitoring
 
@@ -15,7 +15,7 @@ services:
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
-      - "9090:9090"
+      - "9092:9090"
     networks:
       - monitoring
 
@@ -23,11 +23,9 @@ services:
     image: grafana/grafana
     container_name: grafana
     ports:
-      - "3000:3000"
+      - "3002:3000"
     networks:
       - monitoring
 
 networks:
   monitoring:
-
-

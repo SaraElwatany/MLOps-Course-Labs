@@ -63,7 +63,6 @@ jobs:
             
             # Install git if needed
             which git || sudo yum install -y git
-            
 
             mkdir -p sara_directory
             cd sara_directory
