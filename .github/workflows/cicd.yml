@@ -51,15 +51,33 @@ jobs:
           set -x # Enable debug logging
           docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/$ECR_REPO:$IMAGE_TAG
 
-      # - name: Deploy to EC2
-      #   uses: appleboy/ssh-action@v0.1.7
-      #   with:
-      #     host: ${{ secrets.EC2_HOST }}
-      #     username: ${{ secrets.EC2_USERNAME }}
-      #     key: ${{ secrets.EC2_SSH_KEY }}
-      #     script: |
-      #       aws ecr get-login-password --region ${{ env.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com
-      #       docker pull ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/$ECR_REPO:$IMAGE_TAG
-      #       docker stop churn-prediction || true
-      #       docker rm churn-prediction || true
-      #       docker run -d -p 80:8005 --name churn-prediction ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/$ECR_REPO:$IMAGE_TAG
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v0.1.7
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            # Login to AWS ECR
+            aws ecr get-login-password --region ${{ env.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com
+            
+            # Install git if needed
+            which git || sudo yum install -y git
+            
+            # Clone or update repo
+            if [ -d "MLOps-Course-Labs" ]; then
+              cd MLOps-Course-Labs && git pull origin deployment
+            else
+              git clone https://github.com/SaraElwatany/MLOps-Course-Labs.git
+              cd MLOps-Course-Labs
+            fi
+            
+            # Pull latest images and run docker-compose
+            docker-compose down || true
+            docker-compose pull
+            docker-compose up -d
+            
+            # List running containers
+            docker ps
+            docker-compose ps
+
