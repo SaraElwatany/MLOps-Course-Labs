@@ -44,7 +44,7 @@ MLOps-Course-Labs/
 ├── grafana/
   └── provisioning
     └── dashboards
-      └── grafana.yml
+      └── dashboard.yml
 ├── model.pkl 
 ├── transformer.pkl       # Saved transformer for preprocessing
 ├── plot_confusion_matrix.png       # Evaluation visualization
