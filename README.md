@@ -42,8 +42,8 @@ MLOps-Course-Labs/
 ├── prometheus/
   └── prometheus.yml
 ├── grafana/
-  └── provisioning
-    └── dashboards
+  └── provisioning/
+    └── dashboards/
       └── dashboard.yml
 ├── model.pkl 
 ├── transformer.pkl       # Saved transformer for preprocessing
