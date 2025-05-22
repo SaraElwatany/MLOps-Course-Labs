@@ -59,41 +59,9 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            # Login to AWS ECR
-            aws ecr get-login-password --region ${{ env.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com
-            
-            # Install git if needed
-            which git || sudo yum install -y git
-
-            # Install docker-compose if not present
-            if ! command -v docker-compose &> /dev/null; then
-              echo "Installing Docker Compose..."
-              sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-              sudo chmod +x /usr/local/bin/docker-compose
-              # Create symlink for backwards compatibility
-              sudo ln -sf /usr/local/bin/docker-compose /usr/bin/docker-compose
-            fi
-            
-            # Verify docker-compose installation
-            docker-compose --version
-
-            mkdir -p sara_directory
-            cd sara_directory
-
-            # Clone or update repo
-            if [ -d "MLOps-Course-Labs" ]; then
-              cd MLOps-Course-Labs && git pull origin deployment
-            else
-              git clone https://github.com/SaraElwatany/MLOps-Course-Labs.git
-              cd MLOps-Course-Labs
-            fi
-            
-            # Pull latest images and run docker-compose
-            docker-compose down || true
-            docker-compose pull
-            docker-compose up -d
-            
-            # List running containers
-            docker ps
-            docker-compose ps
+            aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
+            docker pull ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/churn-prediction:latest
+            docker stop churn-prediction || true # In case the container doesn't exist yet
+            docker rm churn-prediction || true
+            docker run -d -p 80:8000 --name churn-prediction ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/churn-prediction:latest 
 
