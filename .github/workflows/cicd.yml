@@ -32,6 +32,7 @@ jobs:
 
       - name: Build Docker image
         run: |
+          set -x # Enable debug logging
           docker build -t $ECR_REPO:$IMAGE_TAG ./apis
           docker tag $ECR_REPO:$IMAGE_TAG ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPO:$IMAGE_TAG
 
@@ -47,6 +48,7 @@ jobs:
 
       - name: Push Docker image to ECR
         run: |
+          set -x # Enable debug logging
           docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/$ECR_REPO:$IMAGE_TAG
 
       # - name: Deploy to EC2
