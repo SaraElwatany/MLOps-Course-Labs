@@ -5,7 +5,7 @@ services:
       context: ./apis
     container_name: fastapi
     ports:
-      - "8000:8000"
+      - "80:80"
     networks:
       - monitoring
 
