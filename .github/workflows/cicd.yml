@@ -64,6 +64,10 @@ jobs:
             # Install git if needed
             which git || sudo yum install -y git
             
+
+            mkdir -p sara_directory
+            cd sara_directory
+
             # Clone or update repo
             if [ -d "MLOps-Course-Labs" ]; then
               cd MLOps-Course-Labs && git pull origin deployment
