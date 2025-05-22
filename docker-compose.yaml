@@ -1,5 +1,6 @@
 services:
   fastapi:
+    image: <your_account_id>.dkr.ecr.<region>.amazonaws.com/churn-prediction:sara123
     build:
       context: ./apis
     container_name: fastapi

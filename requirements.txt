@@ -7,4 +7,5 @@ scikit-learn==1.6.1
 scipy==1.15.2
 fastapi
 uvicorn
-prometheus_client
+pytest
+httpx

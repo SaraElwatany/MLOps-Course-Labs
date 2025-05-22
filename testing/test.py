@@ -31,18 +31,18 @@ def test_predict_endpoint():
 
     # create dummy data
     dummy_data = {
-                                'CustomerId': [1579233, 1579234],
-                                'Surname': ['Smith', 'Johnson'],
-                                'CreditScore': [600, 720],
-                                'Geography': ['France', 'Germany'],
-                                'Gender': ['Male', 'Female'],
-                                'Age': [40, 30],
-                                'Tenure': [5, 2],
-                                'Balance': [100000.0, 200000.0],
-                                'NumOfProducts': [1, 2],
-                                'HasCrCard': [1, 0],
-                                'IsActiveMember': [1, 1],
-                                'EstimatedSalary': [50000.0, 60000.0]
+                    'CustomerId': [1579233, 1579234],
+                    'Surname': ['Smith', 'Johnson'],
+                    'CreditScore': [600, 720],
+                    'Geography': ['France', 'Germany'],
+                    'Gender': ['Male', 'Female'],
+                    'Age': [40, 30],
+                    'Tenure': [5, 2],
+                    'Balance': [100000.0, 200000.0],
+                    'NumOfProducts': [1, 2],
+                    'HasCrCard': [1, 0],
+                    'IsActiveMember': [1, 1],
+                    'EstimatedSalary': [50000.0, 60000.0]
                 }
     
 
