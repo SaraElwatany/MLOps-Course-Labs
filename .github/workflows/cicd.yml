@@ -45,9 +45,9 @@ jobs:
       - name: Login to Amazon ECR
         uses: aws-actions/amazon-ecr-login@v1
 
-      - name: Push Docker image to ECR
-        run: |
-          docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/$ECR_REPO:$IMAGE_TAG
+      # - name: Push Docker image to ECR
+      #   run: |
+      #     docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/$ECR_REPO:$IMAGE_TAG
 
       # - name: Deploy to EC2
       #   uses: appleboy/ssh-action@v0.1.7
