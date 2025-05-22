@@ -55,7 +55,7 @@ MLOps-Course-Labs/
 ├── transformer.pkl       # Saved transformer for preprocessing
 ├── plot_confusion_matrix.png       # Evaluation visualization
 ├── requirements.txt               # Python dependencies
-├── docker-compose 
+├── docker-compose.yaml
 ├── .gitignore
 └── README.md
 ```
